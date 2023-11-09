@@ -1,0 +1,30 @@
+---
+version: "3.9"
+
+services:
+
+  api:
+    build:
+      context: .
+#    image: yuryyury/...
+    container_name: api
+    command: python -m uvicorn --host 0.0.0.0 --port 8000 --reload main:app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .env:/with_mongo/.env
+    depends_on:
+      mongo:
+        condition: service_started
+
+  mongo:
+      image: mongo:latest
+      environment:
+        MONGO_INITDB_DATABASE: ${DB_NAME}
+#        MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+#        POSTGRES_PASSWORD: ${DB_PASSWORD}
+      restart: always
+      container_name: mongo
+      volumes:
+        - ./data/db:/data/db
+...

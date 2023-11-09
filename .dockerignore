@@ -1,0 +1,8 @@
+README.md
+.gitignore
+venv/
+.idea
+Dockerfile
+docker-compose.yaml
+__main__.py
+data
